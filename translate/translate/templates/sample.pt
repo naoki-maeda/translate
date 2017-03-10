@@ -1,0 +1,17 @@
+<html>
+  <body>
+    <h1>${'翻訳アプリケーション'}!</h1>
+    ${query[0]}
+    ${query[0].id}
+    ${query[0].name}
+    ${query[0].email}
+    ${query[0].admin}
+    <table>
+      <tr tal:repeat="row 'apple', 'banana', 'pineapple'">
+        <td tal:repeat="col 'juice', 'muffin', 'pie'">
+           ${row.capitalize()} ${col}
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
