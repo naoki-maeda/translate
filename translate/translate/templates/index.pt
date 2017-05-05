@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head id="Head1" runat="server">
+    <title>非同期処理で一覧データ取得サンプル</title>
+    <style type="text/css">
+        tr.Freezing {
+	        Z-INDEX: 10; POSITION: relative; ; TOP: expression(this.offsetParent.scrollTop);
+        }
+        .HeaderStyle th a {color:black; text-decoration:none;}
+        .GridStyle
+        {
+	        overflow-y:auto;
+	        width:210px;
+	        height:500px;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="form1" method="post" runat="server" >
+        <asp:Panel ID="Panel1" runat="server" Height="500px" Width="210px" BorderStyle="Solid" BorderWidth="2px">
+            <div id="Grid" class='GridStyle'>
+            <div id="result" class='DummyBackColor'>
+            <asp:GridView style="overflow:auto" ID="gdViewSample" runat="server">
+                <Columns>
+                    <asp:BoundField  DataField="TestColumn1" HeaderText="カラム1">
+                        <ItemStyle Width="70px"  HorizontalAlign="Left"
+                        VerticalAlign="Middle" />
+                        <HeaderStyle  Width="70px" HorizontalAlign="Center" />
+                    </asp:BoundField>
+                    <asp:BoundField  DataField="TestColumn2" HeaderText="カラム2">
+                        <ItemStyle Width="70px" HorizontalAlign="Left"
+                        VerticalAlign="Middle" />
+                        <HeaderStyle  Width="70px" HorizontalAlign="Center" />
+                    </asp:BoundField>
+                    <asp:BoundField  DataField="TestColumn3" HeaderText="カラム3">
+                        <ItemStyle Width="70px" HorizontalAlign="Center"
+                        VerticalAlign="Middle" />
+                        <HeaderStyle Width="70px" HorizontalAlign="Center" />
+                    </asp:BoundField>
+                </Columns>
+                <HeaderStyle BackColor="Control" CssClass="Freezing HeaderStyle"
+                    ForeColor="Black" />
+            </asp:GridView>
+            </div></div>
+        </asp:Panel>
+    </form>
+</body>
+</html>

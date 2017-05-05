@@ -1,44 +1,40 @@
+import json
+import hashlib
 from pyramid.response import Response
 from pyramid.view import view_config
-
 from sqlalchemy.exc import DBAPIError
 
-# from ..models import MyModel
-from ..models import Users
+from ..models.mymodel import(
+    Users,
+    Login,
+    Language,
+)
 
-# @view_config(route_name='home', renderer='../templates/mytemplate.jinja2')
-# def my_view(request):
-#     try:
-#         query = request.dbsession.query(Mymodel)
-#         one = query.filter(Mymodel.name == 'one').first()
-#     except DBAPIError:
-#         return Response(db_err_msg, content_type='text/plain', status=500)
-#     return {'one': one, 'project': 'translate'}
-
-
-@view_config(route_name='chameleon', renderer='../templates/sample.pt')
-def chameleon_view(request):
+@view_config(route_name='login',request_method='GET', renderer='../templates/login.pt')
+def translate_get(request):
+    """ログイン画面"""
     try:
-        # query = request.dbsession.query(Users)
-        # one = query.filter(Users.name == 'one').first()
-        query = request.dbsession.query(Users).all()
+        result = request.dbsession.query(Login)
     except DBAPIError:
         return Response(db_err_msg, content_type='text/plain', status=500)
-    # return {'one': one, 'project': 'translate'}
-    return {'query': query}
+    return {'query':''}
 
-db_err_msg = """\
-Pyramid is having a problem using your SQL database.  The problem
-might be caused by one of the following things:
+@view_config(route_name='login', request_method='POST', renderer='json')
+def translate_post(request):
+    login_model = request.dbsession.query(Login).filter(Login.email==request.params['email']).first()
+    pass_hash = hashlib.sha1(login_model.password.encode('utf-8')).hexdigest()
+    if login_model.password == request.params['password']:
+        """pass_hashに変える"""
+        print('success')
+        return Response(json.dumps({'query':'register'}))
+    else:
+        print('エラー')
 
-1.  You may need to run the "initialize_translate_db" script
-    to initialize your database tables.  Check your virtual
-    environment's "bin" directory for this script and try to run it.
+@view_config(route_name='register', request_method='GET', renderer='../templates/register.pt')
+def register_view(request):
+    return {}
 
-2.  Your database server may not be running.  Check that the
-    database server referred to by the "sqlalchemy.url" setting in
-    your "development.ini" file is running.
+@view_config(route_name='register', request_method='POST', renderer='../templates/register.pt')
+def register_post(request):
+    return {}
 
-After you fix the problem, please restart the Pyramid application to
-try it again.
-"""

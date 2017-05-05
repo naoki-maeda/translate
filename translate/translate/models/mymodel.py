@@ -7,17 +7,14 @@ from sqlalchemy import (
     Boolean
 )
 
-
 from .meta import Base
-
 import datetime
 
-
-# class MyModel(Base):
-#     __tablename__ = 'models'
-#     id = Column(Integer, primary_key=True)
-#     name = Column(Text)
-#     value = Column(Integer)
+class Login(Base):
+    __tablename__ = 'login'
+    id = Column(Integer, primary_key=True)
+    email = Column(Text, nullable=False)
+    password = Column(Text, nullable=False)
 
 
 class Users(Base):
@@ -41,5 +38,3 @@ class Language(Base):
     lock = Column(Boolean, nullable=False)
     add_timestamp = Column(TIMESTAMP, nullable=False, default=datetime.datetime.now())
     update_timestamp = Column(TIMESTAMP, nullable=False, default=datetime.datetime.now())
-
-# Index('my_index', MyModel.name, unique=True, mysql_length=255)
